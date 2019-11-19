@@ -1,13 +1,14 @@
-let MyPromise = require('./Pormise');
+let MyPromise = require('./Promise');
 let p1 = new MyPromise(function (resolve, reject) {
-    setTimeout(() => {
-        let num = Math.random();
-        if (num < 0.5) {
-            resolve(num);
-        } else {
-            reject('失败');
-        }
-    });
+    // setTimeout(() => {
+    //     let num = Math.random();
+    //     if (num < 0.5) {
+    //         resolve(num);
+    //     } else {
+    //         reject('失败');
+    //     }
+    // });
+    resolve('xxx');
 });
 
 // p1.then(function (data) {

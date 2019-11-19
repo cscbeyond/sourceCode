@@ -48,10 +48,10 @@ Promise.prototype.then = function (onFullfilled, onRejected) {
     };
     let self = this;
     let promise2;
-    if (self.status == onFullfilled) {
+    if (self.status == FULFILLED) {
         let x = onFullfilled(self.value);
     }
-    if (self.status == onRejected) {
+    if (self.status == REJECTED) {
         let x = onRejected(self.value);
     }
     if (self.status == PENDING) {
