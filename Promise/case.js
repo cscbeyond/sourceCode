@@ -16,12 +16,11 @@ let p1 = new MyPromise(function (resolve, reject) {
 //     console.log(er);
 // })
 //这个叫值得穿透
-let p2 = p1.then(function (data) {
-    return data
-});
-p2.then(function (data) {
+// let p2 = p1.then(function (data) {
+//     return data
+// });
+p1.then(function (data) {
     console.log(data);
-
 }, function (reason) {
     console.log(reason);
 })
