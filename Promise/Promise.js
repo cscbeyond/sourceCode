@@ -137,13 +137,13 @@ Promise.prototype.then = function (onFullfilled, onRejected) {
                 try {
                     let x = onRejected(self.value);
                     resolvePromise(promise2, x, resolve, reject);
-    
+
                 } catch (error) {
                     reject(error)
                 }
             });
         })
-      
+
     }
     if (self.status == PENDING) {
         return promise2 = new Promise(function (resolve, reject) {
@@ -151,20 +151,20 @@ Promise.prototype.then = function (onFullfilled, onRejected) {
                 try {
                     let x = onRejected(self.value);
                     resolvePromise(promise2, x, resolve, reject);
-    
+
                 } catch (error) {
                     reject(error)
-    
+
                 }
             });
-    
+
             self.onResolvedCallbacks.push(function () {
                 let x = onFullfilled(self.value);
                 resolvePromise(promise2, x, resolve, reject);
             })
             self.onRejectCallbacks.push(function () {
                 setTimeout(() => {
-    
+
                 });
                 let x = onRejected(self.value);
                 resolvePromise(promise2, x, resolve, reject);
@@ -185,4 +185,38 @@ Promise.deferred = Promise.defer = function () {
     });
     return df;
 }
+
+function gen(times, cb) {
+    let result = [],
+        count = 0;
+    return function (i, data) {
+        result[i] = data;
+        if (++count == times) {
+            cb(result);
+        }
+    }
+}
+Promise.all = function ([promises]) {
+    return new Promise(function (resolve, reject) {
+        let done = gen(promises.length, resolve);
+        for (let i = 0; i < promises.length; i++) {
+            // promises[i].then(done.bind(null,i)); //method1
+            // promises[i].then(done.bind(null, i)); //method1
+            promises[i].then(function (data) { //method2
+                done(i, data);
+            }, reject);
+        }
+    })
+}
+Promise.rece = function ([promises]) {
+    return new Promise(function (resolve, reject) {
+        for (let i = 0; i < promises.length; i++) {
+            promises[i].then(resolve, reject);
+        }
+    }, function (err) {
+        console.log(err);
+    })
+}
+
+
 module.exports = Promise;
