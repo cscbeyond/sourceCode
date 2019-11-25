@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ball</title>
+    <style>
+        .ball {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-left: 0;
+        }
+
+        .ball1 {
+            background-color: red;
+        }
+
+        .ball2 {
+            background-color: pink;
+        }
+
+        .ball3 {
+            background-color: blue;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="ball ball1"></div>
+    <div class="ball ball2"></div>
+    <div class="ball ball3"></div>
+    <script>
+        let ball1 = document.querySelector('.ball1')
+        let ball2 = document.querySelector('.ball2')
+        let ball3 = document.querySelector('.ball3')
+        function move(ball, target) {
+            return new Promise(function (resolve, reject) {
+                let index = 0;
+                let timer = setInterval(() => {
+                    if (index < target) {
+                        ball.style.transform = `translateX(${index++}px)`
+                    } else {
+                        clearInterval(timer);
+                        resolve();
+                    }
+                }, 13);
+            })
+        }
+        move(ball1, 100).then(function () {
+            return move(ball2, 100);
+        }).then(function () {
+            return move(ball3, 100);
+        }).then(function () {
+            alert('finish');
+        })
+    </script>
+</body>
+
+</html>
